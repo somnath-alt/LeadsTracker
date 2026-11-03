@@ -2,13 +2,30 @@ let myLeads=[];
 const inputEl = document.getElementById("input-el");
 const inputBtn = document.getElementById("save-btn");
 const ulEl = document.getElementById("ul-el");
+const deleteBtn = document.getElementById("delete-btn");
+
+const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
+console.log(leadsFromLocalStorage);
+
+if(leadsFromLocalStorage){
+    myLeads = leadsFromLocalStorage;
+    renderLeads();}
 
 inputBtn.addEventListener("click", function(){
     console.log("Save button has been clicked!");
     myLeads.push(inputEl.value);
     console.log(myLeads);
-    renderLeads();
     inputEl.value = "";
+    localStorage.setItem("myLeads", JSON.stringify(myLeads));
+    renderLeads();
+    //console.log(localStorage.getItem("myLeads"));
+})
+
+deleteBtn.addEventListener("dblclick", function(){
+    console.log("Delete button has been double clicked!");
+    localStorage.clear();
+    myLeads = [];
+    renderLeads();
 })
 
 function renderLeads(){
@@ -24,6 +41,4 @@ function renderLeads(){
     }
     ulEl.innerHTML = listItems;
 }
-   //const li = document.createElement("li");
-   //li.textContent = myLeads[i];
-   //ulEl.append(li);
+  
